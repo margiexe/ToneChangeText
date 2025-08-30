@@ -1,4 +1,5 @@
 import { useState } from "react";
+const API_URL = import.meta.env.VITE_API_URL || "/api/change-tone";
 
 export default function TextEditor() {
     const [text, setText] = useState("");
@@ -12,7 +13,7 @@ export default function TextEditor() {
         setHistory((prev) => [...prev, text]);
         setFuture([]);
 
-        const response = await fetch("/api/change-tone", {
+        const response = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text, tone }),
