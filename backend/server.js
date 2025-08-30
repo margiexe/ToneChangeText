@@ -4,6 +4,14 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { toneSystemPrompt } from "./prompts.js";
 
+import path from "path";
+import { fileURLToPath } from "url";
+
+// Load env variables (optional: specify custom path)
+dotenv.config({ path: './.env' }); 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 dotenv.config();
 
 const app = express();
