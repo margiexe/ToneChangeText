@@ -7,12 +7,11 @@ import { toneSystemPrompt } from "./prompts.js";
 import path from "path";
 import { fileURLToPath } from "url";
 
-// Load env variables (optional: specify custom path)
-dotenv.config({ path: './.env' }); 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-dotenv.config();
+// Load env variables (only call dotenv.config() once)
+dotenv.config({ path: './.env' }); 
 
 const app = express();
 app.use(cors());
@@ -21,44 +20,52 @@ app.use(express.json());
 /* using system prompts for better results */
 app.post("/api/change-tone", async (req, res) => {  /* API call to mistral AI */
     try {
-    const { text, tone } = req.body;
+        const { text, tone } = req.body;
 
-    if (!text || !tone) {
-        return res.status(400).json({ error: "Missing 'text' or 'tone' field" });
-    }
+        if (!text || !tone) {
+            return res.status(400).json({ error: "Missing 'text' or 'tone' field" });
+        }
 
-    const systemPrompt = toneSystemPrompt;
+        const systemPrompt = toneSystemPrompt;
 
-    const response = await fetch("https://api.mistral.ai/v1/chat/completions", {
-        method: "POST",
-        headers: {
-        Authorization: `Bearer ${process.env.MISTRAL_API_KEY}`,
-        "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-        model: "mistral-small",
-        messages: [
-            { role: "system", content: systemPrompt },
-            { role: "user", content: `Tone: ${tone}\n\nText: ${text}` },
-        ],
-        temperature: 0.7,
-        max_tokens: 512,
-        }),
-    });
+        const response = await fetch("https://api.mistral.ai/v1/chat/completions", {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${process.env.MISTRAL_API_KEY}`,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                model: "mistral-small",
+                messages: [
+                    { role: "system", content: systemPrompt },
+                    { role: "user", content: `Tone: ${tone}\n\nText: ${text}` },
+                ],
+                temperature: 0.7,
+                max_tokens: 512,
+            }),
+        });
 
-    const data = await response.json();
+        // Check if the API response is successful
+        if (!response.ok) {
+            console.error("Mistral API error:", response.status, response.statusText);
+            return res.status(500).json({ error: "Failed to communicate with Mistral API" });
+        }
 
-    if (!data?.choices?.[0]?.message?.content) {
-        return res.status(500).json({ error: "Invalid response from Mistral" });
-    }
+        const data = await response.json();
 
-    res.json({ result: data.choices[0].message.content.trim() });
+        if (!data?.choices?.[0]?.message?.content) {
+            console.error("Invalid Mistral response:", data);
+            return res.status(500).json({ error: "Invalid response from Mistral" });
+        }
+
+        res.json({ result: data.choices[0].message.content.trim() });
     } catch (err) {
         console.error("Error:", err);
         res.status(500).json({ error: "Something went wrong" });
     }
 });
 
+// Serve static files in production
 if (process.env.NODE_ENV === "production") {
     app.use(express.static(path.join(__dirname, "../frontend/dist")));
     app.get("*", (req, res) =>
