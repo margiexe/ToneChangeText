@@ -9,12 +9,13 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.post("/api/change-tone", async (req, res) => {
-  try {
+/* using system prompts for better results */
+app.post("/api/change-tone", async (req, res) => {  /* API call to mistral AI */
+    try {
     const { text, tone } = req.body;
 
     if (!text || !tone) {
-      return res.status(400).json({ error: "Missing 'text' or 'tone' field" });
+        return res.status(400).json({ error: "Missing 'text' or 'tone' field" });
     }
 
     const systemPrompt = `
@@ -46,35 +47,35 @@ ASSISTANT: "We will meet at 3 pm."
     `;
 
     const response = await fetch("https://api.mistral.ai/v1/chat/completions", {
-      method: "POST",
-      headers: {
+        method: "POST",
+        headers: {
         Authorization: `Bearer ${process.env.MISTRAL_API_KEY}`,
         "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
+        },
+        body: JSON.stringify({
         model: "mistral-small",
         messages: [
-          { role: "system", content: systemPrompt },
-          { role: "user", content: `Tone: ${tone}\n\nText: ${text}` },
+            { role: "system", content: systemPrompt },
+            { role: "user", content: `Tone: ${tone}\n\nText: ${text}` },
         ],
         temperature: 0.7,
         max_tokens: 512,
-      }),
+        }),
     });
 
     const data = await response.json();
 
     if (!data?.choices?.[0]?.message?.content) {
-      return res.status(500).json({ error: "Invalid response from Mistral" });
+        return res.status(500).json({ error: "Invalid response from Mistral" });
     }
 
     res.json({ result: data.choices[0].message.content.trim() });
-  } catch (err) {
-    console.error("Error:", err);
-    res.status(500).json({ error: "Something went wrong" });
-  }
+    } catch (err) {
+        console.error("Error:", err);
+        res.status(500).json({ error: "Something went wrong" });
+    }
 });
 
 app.listen(5000, () =>
-  console.log("✅ Backend running on http://localhost:5000")
+    console.log("Backend running on http://localhost:5000")
 );
