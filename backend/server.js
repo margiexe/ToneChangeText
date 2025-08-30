@@ -2,6 +2,7 @@ import express from "express";
 import fetch from "node-fetch";
 import cors from "cors";
 import dotenv from "dotenv";
+import { toneSystemPrompt } from "./prompts.js";
 
 dotenv.config();
 
@@ -18,33 +19,7 @@ app.post("/api/change-tone", async (req, res) => {  /* API call to mistral AI */
         return res.status(400).json({ error: "Missing 'text' or 'tone' field" });
     }
 
-    const systemPrompt = `
-You are an assistant that rewrites user text into the requested tone.
-Always respond with the rewritten text only, no explanations or extra notes.
-
-Tones supported: formal, neutral, casual.
-
-Examples:
----
-USER: Tone: formal | Text: "I need this report asap."
-ASSISTANT: "Could you please provide this report at your earliest convenience?"
----
-USER: Tone: casual | Text: "Would you mind grabbing me a coffee?"
-ASSISTANT: "Hey, can you grab me a coffee?"
----
-USER: Tone: neutral | Text: "The project must be submitted tomorrow."
-ASSISTANT: "The project is due tomorrow."
----
-USER: Tone: formal | Text: "Send me the file."
-ASSISTANT: "Could you kindly send me the file?"
----
-USER: Tone: casual | Text: "Please complete the task quickly."
-ASSISTANT: "Hey, try to finish the task soon."
----
-USER: Tone: neutral | Text: "Let’s meet at 3 pm."
-ASSISTANT: "We will meet at 3 pm."
----
-    `;
+    const systemPrompt = toneSystemPrompt;
 
     const response = await fetch("https://api.mistral.ai/v1/chat/completions", {
         method: "POST",
