@@ -1,12 +1,73 @@
-# React + Vite
+A full-stack web application that allows users to **edit text** and **adjust its tone** (e.g., formal ↔ casual) using AI.  
+The project is split into two parts: 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frontend : ReactJS
+Backend : Express and Node
 
-Currently, two official plugins are available:
+AI used for tone handling : Mistral small model (https://docs.mistral.ai/api/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Expanding the ESLint configuration
+## To run project in localhost : 
+- Clone the Repository
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+git clone https://github.com/margiexe/ToneChangeText.git
+cd ToneChangeText
+
+- go to directory frontend (cd frontend)
+- run commands : 
+    'npm install' then 'npm run dev'
+- open another terminal
+- go to directory backend (cd backend)
+- run commands : 
+    'npm install' then 'node server.js'
+
+Frontend runs on [http://localhost:5173](http://localhost:5173) (default Vite port).
+Backend runs on [http://localhost:5000](http://localhost:5000).
+
+
+You can add examples and prompts into backend/prompts.js to enhance the response
+
+
+## Features
+- Rich text editor to input and edit text  
+- Tone picker with multiple options (formal, casual, neutral, etc.)  
+- Undo/redo history functionality  
+- API integration with AI model for tone transformation  
+- Deployed on **Render**  
+
+
+## Supported Tones
+- Formal 👔
+- Casual 😎
+- Polite 🙏
+- Friendly 😊
+- Professional 💼
+- Funny 😂
+- Serious 🎯
+- Creative 🎨
+- Persuasive 💪
+
+
+## Tech Stack
+- **Frontend**: React.js, Tailwind CSS  
+- **Backend**: Node.js, Express.js  
+- **AI API**: Mistral small API  
+- **Deployment**: Render  
+
+
+## Project Structure
+root/
+├── backend/ # Node.js + Express API
+│ ├── server.js
+│ ├── routes/
+│ └── .env #API_KEYS
+├── frontend/ # React frontend
+│ ├── src/
+│ ├── public/
+│ └── package.json
+└── README.md
+
+
+## versions
+node : 22.19.0
+
