@@ -1,3 +1,5 @@
+Deployed link : https://tonechangetext.onrender.com/
+
 A full-stack web application that allows users to **edit text** and **adjust its tone** (e.g., formal ↔ casual) using AI.  
 The project is split into two parts: 
 
