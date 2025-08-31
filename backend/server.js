@@ -68,11 +68,6 @@ app.post("/api/change-tone", async (req, res) => {
 const frontendDist = path.join(__dirname, "../frontend/dist");
 app.use(express.static(frontendDist));
 
-// Fallback to index.html for SPA routes
-// app.get("*", (req, res) => {
-//     res.sendFile(path.join(frontendDist, "index.html"));
-// });
-
 // Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
