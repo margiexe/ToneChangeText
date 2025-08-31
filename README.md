@@ -42,22 +42,22 @@ The application is deployed on Render and ready to use immediately. No setup req
 
 
 ToneChangeText/
-│
-├── backend/                    # Node.js + Express API
-│ ├── server.js                # Express server, API routes, Mistral integration
-│ ├── prompts.js               # Tone system prompt and examples
-│ ├── routes/                  # API route handlers
-│
-├── frontend/                   # React frontend
-│ ├── src/
-│ ├── components/
-│ │ └── TextEditor.jsx         # Main UI for text editing and tone selection
-│ ├── public/
-│ ├── index.html
-│ ├── package.json
-│ └── ...
-│
-└── README.md
+- │
+- ├── backend/                    # Node.js + Express API
+- │ ├── server.js                # Express server, API routes, Mistral integration
+- │ ├── prompts.js               # Tone system prompt and examples
+- │ ├── routes/                  # API route handlers
+- │
+- ├── frontend/                   # React frontend
+- │ ├── src/
+- │ ├── components/
+- │ │ └── TextEditor.jsx         # Main UI for text editing and tone selection
+- │ ├── public/
+- │ ├── index.html
+- │ ├── package.json
+- │ └── ...
+- │
+- └── README.md
 
 
 ---
