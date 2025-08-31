@@ -7,13 +7,14 @@ export default function TextEditor() {
     const [future, setFuture] = useState([]);
     const [isProcessing, setIsProcessing] = useState(false);
 
+    /* calling for API which change tone */
     const changeTone = async (tone) => {
     try {
         setIsProcessing(true);
-        setHistory((prev) => [...prev, text]);
+        setHistory((prev) => [...prev, text]); /* to redo, we are storing previous text */
         setFuture([]);
 
-        const response = await fetch(API_URL, {
+        const response = await fetch("/api/change-tone", { /* to run on localhost remove "/api/change-tone" and add API_URL*/
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text, tone }),
