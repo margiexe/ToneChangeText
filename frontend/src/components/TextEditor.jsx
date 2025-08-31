@@ -13,7 +13,7 @@ export default function TextEditor() {
         setHistory((prev) => [...prev, text]);
         setFuture([]);
 
-        const response = await fetch(API_URL, {
+        const response = await fetch("/api/change-tone", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text, tone }),
