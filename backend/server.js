@@ -66,9 +66,9 @@ const frontendDist = path.join(__dirname, "../frontend/dist");
 app.use(express.static(frontendDist));
 
 // Fallback to index.html for SPA routes
-app.get("*", (req, res) => {
-    res.sendFile(path.join(frontendDist, "index.html"));
-});
+// app.get("*", (req, res) => {
+//     res.sendFile(path.join(frontendDist, "index.html"));
+// });
 
 // Start server
 const PORT = process.env.PORT || 5000;
