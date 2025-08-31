@@ -1,44 +1,136 @@
-Deployed link : https://tonechangetext.onrender.com/
+# ✨ Tone Transform
 
-A full-stack web application that allows users to **edit text** and **adjust its tone** (e.g., formal ↔ casual) using AI.  
-The project is split into two parts: 
+Transform your text into different tones — formal, casual, polite, friendly, professional, funny, serious, creative, or persuasive — with the power of AI.  
+This project uses the [Mistral API](https://docs.mistral.ai/) for tone transformation and provides a modern React frontend with undo/redo support.
 
-Frontend : ReactJS
-Backend : Express and Node
+---
 
-AI used for tone handling : Mistral small model (https://docs.mistral.ai/api/)
+## 📑 Table of Contents
+
+- [🚀 Features](#features)
+- [📂 Project Structure](#project-structure)
+- [⚙ Setup & Installation](#setup--installation)
+- [🖊 Usage](#usage)
+- [🔧 API Reference](#api-reference)
+- [🎨 Supported Tones](#supported-tones)
+- [🛠 Tech Stack](#tech-stack)
+
+---
+
+## Features
+
+- 🎨 *Tone Transformation* — Rewrite text into multiple tones with one click.
+- ⏪ *Undo & Redo* — Easily go back and forth between edits.
+- ⚡ *AI-powered* — Uses Mistral's mistral-small model for natural and fluent rewrites.
+- 🖥 *Modern UI* — Beautiful React + Tailwind CSS frontend with animated UI.
+- 🔑 *Customizable* — Supports multiple tones, easy to extend.
+
+---
+
+## Project Structure
 
 
-## To run project in localhost : 
-- Clone the Repository
+ToneChangeText/
+│
+├── backend/
+│ ├── server.js # Express server, API routes, Mistral integration
+│ ├── prompts.js # Tone system prompt and examples
+│ └── .env # API keys (not committed)
+│
+├── frontend/
+│ ├── components/
+│ │ └── TextEditor.jsx # Main UI for text editing and tone selection
+│ ├── index.html
+│ ├── package.json
+│ └── ...
+│
+└── README.md # Documentation
 
+
+---
+
+## Setup & Installation
+
+### 1. Clone the Repository
+
+bash
 git clone https://github.com/margiexe/ToneChangeText.git
 cd ToneChangeText
 
-- go to directory frontend (cd frontend)
-- run commands : 
-    'npm install' then 'npm run dev'
-- open another terminal
-- go to directory backend (cd backend)
-- run commands : 
-    'npm install' then 'node server.js'
+
+### 2. Backend Setup
+
+bash
+cd backend
+npm install
+
+
+Create a .env file inside backend/ with:
+
+
+MISTRAL_API_KEY=your_mistral_api_key_here
+PORT=5000
+
+
+Start the backend:
+
+bash
+node server.js
+
+
+### 3. Frontend Setup
+
+bash
+cd ../frontend
+npm install
+npm run dev
+
 
 Frontend runs on [http://localhost:5173](http://localhost:5173) (default Vite port).
 Backend runs on [http://localhost:5000](http://localhost:5000).
 
+---
 
-You can add examples and prompts into backend/prompts.js to enhance the response
+## Usage
+
+1. Open the frontend in your browser.
+2. Type/paste your text in the input area.
+3. Pick a tone (e.g., *Formal, **Funny, **Professional*).
+4. Watch your text transform instantly.
+
+      - Use *Undo* ↶ or *Redo* ↷ to navigate through edits.
+
+---
+
+## API Reference
+
+### Endpoint
 
 
-## Features
-- Rich text editor to input and edit text  
-- Tone picker with multiple options (formal, casual, neutral, etc.)  
-- Undo/redo history functionality  
-- API integration with AI model for tone transformation  
-- Deployed on **Render**  
+POST /api/change-tone
 
+
+### Request Body
+
+json
+{
+	"text": "I need this report asap.",
+	"tone": "formal"
+}
+
+
+### Response
+
+json
+{
+	"result": "Could you please provide this report at your earliest convenience?"
+}
+
+
+---
 
 ## Supported Tones
+
 - Formal 👔
 - Casual 😎
 - Polite 🙏
@@ -49,27 +141,9 @@ You can add examples and prompts into backend/prompts.js to enhance the response
 - Creative 🎨
 - Persuasive 💪
 
+---
 
 ## Tech Stack
-- **Frontend**: React.js, Tailwind CSS  
-- **Backend**: Node.js, Express.js  
-- **AI API**: Mistral small API  
-- **Deployment**: Render  
 
-
-## Project Structure
-root/
-├── backend/ # Node.js + Express API
-│ ├── server.js
-│ ├── routes/
-│ └── .env #API_KEYS
-├── frontend/ # React frontend
-│ ├── src/
-│ ├── public/
-│ └── package.json
-└── README.md
-
-
-## versions
-node : 22.19.0
-
+- *Backend:* Node.js, Express, Mistral API
+- *Frontend:* React (Vite), Tailwind CSS
